@@ -1,3 +1,20 @@
+# Data files
+*.csv*
+*.tsv
+*.DTA
+*.tgz
+*.rar
+*.docx
+*.pdf
+*.zip
+*.xlsx
+*.h5
+*.jpg
+*.npy
+
+#Mac files
+.DS_Store
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]

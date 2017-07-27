@@ -36,3 +36,12 @@ def audit():
 
 if __name__ == '__main__':
     audit()
+
+#Iterparse from Case Study
+def audit():
+    for event, elem in ET.iterparse(osm_file, events=("start",)):
+        if elem.tag == "way":
+            for tag in elem.iter("tag"):
+                if is_street_name(tag):
+                    audit_street_type(street_types, tag.attrib['v'])
+    pprint.pprint(dict(street_types))

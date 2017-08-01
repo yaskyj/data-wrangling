@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 import xml.etree.ElementTree as ET  # Use cElementTree or lxml if too slow
-
+# Just to test
 OSM_FILE = "boulder.osm"
 SAMPLE_FILE = "sample.osm"
 

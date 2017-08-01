@@ -5,6 +5,7 @@
 import xml.etree.cElementTree as ET
 from collections import defaultdict
 import re
+import pprint
 
 osm_file = open("chicago.osm", "r")
 
@@ -31,13 +32,15 @@ def is_street_name(elem):
 def audit():
     for event, elem in ET.iterparse(osm_file):
         if is_street_name(elem):
-            audit_street_type(street_types, elem.attrib['v'])    
-    print_sorted_dict(street_types)    
+            audit_street_type(street_types, elem.attrib['v'])
+    pprint.pprint(dict(street_types))
+    # print_sorted_dict(street_types)
+
 
 if __name__ == '__main__':
     audit()
 
-#Iterparse from Case Study
+#Iterparse from Case Study - tag types
 def audit():
     for event, elem in ET.iterparse(osm_file, events=("start",)):
         if elem.tag == "way":
@@ -45,3 +48,12 @@ def audit():
                 if is_street_name(tag):
                     audit_street_type(street_types, tag.attrib['v'])
     pprint.pprint(dict(street_types))
+
+# Iterparse from Case Study - users
+def process_map(filename):
+    users = set()
+    for _, element in ET.iterparse(filename):
+        if 'uid' in element.attrib:
+            users.add(element.attrib['uid'])
+
+    return users

@@ -257,6 +257,15 @@ def shape_element(element):
                 node[attribute] = element.get(attribute) 
         if len(pos) > 0:
             node["pos"] = pos
+
+        for tag in element.iter("tag"):
+            if problemchars.match(tag.attrib['k']):
+                pass
+            elif lower_colon.match(element.attrib['k']):
+                print
+            else:
+                pass
+
         print node
         return node
     else:

@@ -261,8 +261,10 @@ def shape_element(element):
         for tag in element.iter("tag"):
             if problemchars.match(tag.attrib['k']):
                 pass
-            elif lower_colon.match(element.attrib['k']):
-                print
+            elif tag.attrib['k'].count(":") > 1:
+                pass
+            elif lower_colon.match(tag.attrib['k']):
+                print tag.attrib['k']
             else:
                 pass
 

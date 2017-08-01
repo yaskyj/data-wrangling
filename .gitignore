@@ -10,7 +10,6 @@
 *.h5
 *.jpg
 *.npy
-*.osm
 *.bz2
 
 #Mac files

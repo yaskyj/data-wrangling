@@ -241,8 +241,23 @@ CREATED = [ "version", "changeset", "timestamp", "user", "uid"]
 def shape_element(element):
     node = {}
     if element.tag == "node" or element.tag == "way" :
-        # YOUR CODE HERE
-        
+        pos = []
+        for attribute in element.attrib:
+            if attribute in CREATED:
+                if "created" in node:
+                    node["created"][attribute] = element.get(attribute)
+                else:
+                    node["created"] = {}
+                    node["created"][attribute] = element.get(attribute)
+            elif attribute == "lat":
+                pos.insert(0, float(element.get(attribute)))
+            elif attribute == "lon":
+                pos.insert(-1, float(element.get(attribute)))
+            else:
+                node[attribute] = element.get(attribute) 
+        if len(pos) > 0:
+            node["pos"] = pos
+        print node
         return node
     else:
         return None

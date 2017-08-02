@@ -241,6 +241,12 @@ CREATED = [ "version", "changeset", "timestamp", "user", "uid"]
 def shape_element(element):
     node = {}
     if element.tag == "node" or element.tag == "way" :
+        node["type"] = element.tag
+
+        if element.tag == "way":
+            node["node_refs"] = []
+            for nd in element.iter("nd"):
+                node["node_refs"].append(nd.attrib['ref'])
         #Create pos list to hold latitude and longitude
         pos = []
 
@@ -277,15 +283,16 @@ def shape_element(element):
             #Match against one colon matches
             elif lower_colon.match(tag.attrib['k']):
                 if tag.attrib['k'].find("addr:") == 0:
-                    print "address: ",tag.attrib['k'].split(":")[1], tag.attrib['v']
-                    # if "address" in node:
-                    #     node["address"][] = 
-                    # else:
-                    #     print tag.attrib['k']
+                    if "address" in node:
+                        node["address"][tag.attrib['k'].split(":")[1]] =  tag.attrib['v']
+                    else:
+                        node["address"] = {}
+                        node["address"][tag.attrib['k'].split(":")[1]] =  tag.attrib['v']
+                else:
+                    node[tag.attrib['k'].replace(":", "_")] = tag.attrib['v']
             else:
-                pass
+                node[tag.attrib['k']] = tag.attrib['v']
 
-        print node
         return node
     else:
         return None

@@ -5,14 +5,19 @@ from collections import defaultdict
 import re
 import pprint
 
+#Open  city file
 osm_file = open("boulder.osm", "r")
 
+#Regex to find word at the end of the street name
 street_type_re = re.compile(r'\b\S+\.?$', re.IGNORECASE)
+#Create dictionary to hold street names
 street_types = defaultdict(set)
 
+#Correct street names
 expected = ["Street", "Avenue", "Boulevard", "Drive", "Court", "Place", "Square", "Lane", "Road", 
             "Trail", "Parkway", "Commons"]
 
+#Check street names against expected and add to dictionary
 def audit_street_type(street_types, street_name):
     m = street_type_re.search(street_name)
     if m:
@@ -27,9 +32,11 @@ def print_sorted_dict(d):
         v = d[k]
         print "%s: %d" % (k, v) 
 
+#Looks for the addr:street attrib
 def is_street_name(elem):
     return (elem.attrib['k'] == "addr:street")
 
+#Iterate through elements in file in order to review street names
 def audit():
     for event, elem in ET.iterparse(osm_file):
         if elem.tag == "way":

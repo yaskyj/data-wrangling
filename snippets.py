@@ -241,31 +241,43 @@ CREATED = [ "version", "changeset", "timestamp", "user", "uid"]
 def shape_element(element):
     node = {}
     if element.tag == "node" or element.tag == "way" :
+        #Create pos list to hold latitude and longitude
         pos = []
+
+        #Iterate through the element attributes
         for attribute in element.attrib:
+            #Check to see if the attribute in in the created list
             if attribute in CREATED:
                 if "created" in node:
                     node["created"][attribute] = element.get(attribute)
                 else:
                     node["created"] = {}
                     node["created"][attribute] = element.get(attribute)
+            #If latitude or longitude then insert into the pos list
             elif attribute == "lat":
                 pos.insert(0, float(element.get(attribute)))
             elif attribute == "lon":
                 pos.insert(-1, float(element.get(attribute)))
+            #Other attributes are just added
             else:
                 node[attribute] = element.get(attribute) 
+
+        #If pos exists, then add
         if len(pos) > 0:
             node["pos"] = pos
 
+        #Iterate through tag elements
         for tag in element.iter("tag"):
+            #Check for problem characters and ignore if present
             if problemchars.match(tag.attrib['k']):
                 pass
+            #Check if the tag more than one colon and if so, ignore
             elif tag.attrib['k'].count(":") > 1:
                 pass
+            #Match against one colon matches
             elif lower_colon.match(tag.attrib['k']):
                 if tag.attrib['k'].find("addr:") == 0:
-                    print tag.attrib['k'], tag.attrib['v']
+                    print "address: ",tag.attrib['k'].split(":")[1], tag.attrib['v']
                     # if "address" in node:
                     #     node["address"][] = 
                     # else:

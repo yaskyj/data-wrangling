@@ -264,7 +264,12 @@ def shape_element(element):
             elif tag.attrib['k'].count(":") > 1:
                 pass
             elif lower_colon.match(tag.attrib['k']):
-                print tag.attrib['k']
+                if tag.attrib['k'].find("addr:") == 0:
+                    print tag.attrib['k'], tag.attrib['v']
+                    # if "address" in node:
+                    #     node["address"][] = 
+                    # else:
+                    #     print tag.attrib['k']
             else:
                 pass
 

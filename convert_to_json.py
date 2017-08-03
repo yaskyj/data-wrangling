@@ -131,8 +131,7 @@ def shape_element(element):
 
 
 def process_map(file_in, pretty = False):
-    # You do not need to change this file
-    file_out = "mongoimport.json"#.format(file_in)
+    file_out = "boulderimport.json"#.format(file_in)
     data = []
     with codecs.open(file_out, "w") as fo:
         for _, element in ET.iterparse(file_in):

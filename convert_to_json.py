@@ -6,7 +6,6 @@ import re
 import codecs
 import json
 
-lower = re.compile(r'^([a-z]|_)*$')
 lower_colon = re.compile(r'^([a-z]|_)*:([a-z]|_)*$')
 problemchars = re.compile(r'[=\+/&<>;\'"\?%#$@\,\. \t\r\n]')
 street_type_re = re.compile(r'\b\S+\.?$', re.IGNORECASE)

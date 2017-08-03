@@ -34,9 +34,9 @@ def print_top_tags(d):
     values = sorted(d.items(), key=lambda x:x[1], reverse=True)
     for k,v in values:
         if count < 10:
-            if k != "addr:street" and k != "name":
-                top_tags[k] = tag_values[k]
-                count += 1
+            # if k != "addr:street" and k != "name":
+            top_tags[k] = tag_values[k]
+            count += 1
         else:
             break
     pprint.pprint(dict(top_tags))

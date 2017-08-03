@@ -30,7 +30,7 @@ def print_sorted_dict(d):
     keys = sorted(keys, key=lambda s: s.lower())
     for k in keys:
         v = d[k]
-        print "%s: %d" % (k, v) 
+        print "%s: %d" % (k, len(d[k])) 
 
 #Looks for the addr:street attrib
 def is_street_name(elem):
@@ -43,8 +43,8 @@ def audit():
             for tag in elem.iter("tag"):
                 if is_street_name(tag):
                     audit_street_type(street_types, tag.attrib['v'])
-    pprint.pprint(dict(street_types))
-    # print_sorted_dict(street_types)
+    # pprint.pprint(dict(street_types))
+    print_sorted_dict(street_types)
 
 
 if __name__ == '__main__':

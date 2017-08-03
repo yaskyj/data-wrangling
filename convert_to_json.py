@@ -12,17 +12,36 @@ problemchars = re.compile(r'[=\+/&<>;\'"\?%#$@\,\. \t\r\n]')
 street_type_re = re.compile(r'\b\S+\.?$', re.IGNORECASE)
 
 
-expected = ["Street", "Avenue", "Boulevard", "Drive", "Court", "Place", "Square", "Lane", "Road", 
+street_expected = ["Street", "Avenue", "Boulevard", "Drive", "Court", "Place", "Square", "Lane", "Road", 
             "Trail", "Parkway", "Commons"]
 
-mapping = { "St": "Street",
+#Based on review of audit_street_names script
+street_mapping = { "St": "Street",
             "St.": "Street",
             "Ave": "Avenue",
-            "Rd.": "Road"
+            "Rd.": "Road",
+            "st": "Street",
+            "Dr": "Drive",
+            "Ct": "Court",
+            "Blvd": "Boulevard",
+            "Baselin": "Baseline",
+            "Ave.": "Avenue"
             }
 
 CREATED = [ "version", "changeset", "timestamp", "user", "uid"]
 
+
+def clean_street_name(street_name):
+    m = street_type_re.search(street_name)
+    if m:
+        street_type = m.group()
+        if street_type in street_mapping:
+            return street_mapping[street_type]
+        else:
+            return street_name
+
+def is_street_name(elem):
+    return elem.attrib['k'] == "addr:street"
 
 def shape_element(element):
     node = {}
@@ -52,7 +71,7 @@ def shape_element(element):
                 pos.insert(-1, float(element.get(attribute)))
             #Other attributes are just added
             else:
-                node[attribute] = element.get(attribute) 
+                node[attribute.replace(":", "_")] = element.get(attribute) 
 
         #If pos exists, then add
         if len(pos) > 0:
@@ -67,13 +86,20 @@ def shape_element(element):
             elif tag.attrib['k'].count(":") > 1:
                 pass
             #Match against one colon matches
-            elif lower_colon.match(tag.attrib['k']):
+            elif lower_colon.match(tag.attrib['k'].lower()):
                 if tag.attrib['k'].find("addr:") == 0:
                     if "address" in node:
-                        node["address"][tag.attrib['k'].split(":")[1]] =  tag.attrib['v']
+                        if is_street_name(tag):
+                            node["address"]["street"] = clean_street_name(tag.attrib['v'])
+                        else:
+                            node["address"][tag.attrib['k'].split(":")[1]] =  tag.attrib['v']
                     else:
-                        node["address"] = {}
-                        node["address"][tag.attrib['k'].split(":")[1]] =  tag.attrib['v']
+                        if is_street_name(tag):
+                            node["address"] = {}
+                            node["address"]["street"] = clean_street_name(tag.attrib['v'])
+                        else:
+                            node["address"] = {}
+                            node["address"][tag.attrib['k'].split(":")[1]] =  tag.attrib['v']
                 else:
                     node[tag.attrib['k'].replace(":", "_")] = tag.attrib['v']
             else:
@@ -86,7 +112,7 @@ def shape_element(element):
 
 def process_map(file_in, pretty = False):
     # You do not need to change this file
-    file_out = "{0}.json".format(file_in)
+    file_out = "mongoimport.json"#.format(file_in)
     data = []
     with codecs.open(file_out, "w") as fo:
         for _, element in ET.iterparse(file_in):
@@ -100,4 +126,4 @@ def process_map(file_in, pretty = False):
     return data
 
 if __name__ == "__main__":
-    data = process_map('example.osm')
+    data = process_map('sample.osm')

@@ -84,7 +84,6 @@ street_type_re = re.compile(r'\b\S+\.?$', re.IGNORECASE)
 expected = ["Street", "Avenue", "Boulevard", "Drive", "Court", "Place", "Square", "Lane", "Road", 
             "Trail", "Parkway", "Commons"]
 
-# UPDATE THIS VARIABLE
 mapping = { "St": "Street",
             "St.": "Street",
             "Ave": "Avenue",

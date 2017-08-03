@@ -12,9 +12,6 @@ problemchars = re.compile(r'[=\+/&<>;\'"\?%#$@\,\. \t\r\n]')
 street_type_re = re.compile(r'\b\S+\.?$', re.IGNORECASE)
 
 
-street_expected = ["Street", "Avenue", "Boulevard", "Drive", "Court", "Place", "Square", "Lane", "Road", 
-            "Trail", "Parkway", "Commons"]
-
 #Based on review of audit_street_names script
 street_mapping = { "St": "Street",
             "St.": "Street",
@@ -26,6 +23,15 @@ street_mapping = { "St": "Street",
             "Blvd": "Boulevard",
             "Baselin": "Baseline",
             "Ave.": "Avenue"
+            }
+
+#Based on review of explor_tag_types script
+city_mapping = { "Boulder, CO": "Boulder",
+            "lafayette": "Lafayette",
+            " Lafayette": "Lafayette",
+            u"Boulder, CO \u200e": "Boulder",
+            "CO": "Boulder",
+            "boulder": "Boulder"
             }
 
 CREATED = [ "version", "changeset", "timestamp", "user", "uid"]
@@ -42,6 +48,15 @@ def clean_street_name(street_name):
 
 def is_street_name(elem):
     return elem.attrib['k'] == "addr:street"
+
+def clean_city_name(city_name):
+    if city_name in city_mapping:
+        return city_mapping[city_name]
+    else:
+        return city_name
+
+def is_city_name(elem):
+    return elem.attrib['k'] == "addr:city"
 
 def shape_element(element):
     node = {}
@@ -91,12 +106,17 @@ def shape_element(element):
                     if "address" in node:
                         if is_street_name(tag):
                             node["address"]["street"] = clean_street_name(tag.attrib['v'])
+                        elif is_city_name(tag):
+                            node["address"]["city"] = clean_city_name(tag.attrib['v'])
                         else:
                             node["address"][tag.attrib['k'].split(":")[1]] =  tag.attrib['v']
                     else:
                         if is_street_name(tag):
                             node["address"] = {}
                             node["address"]["street"] = clean_street_name(tag.attrib['v'])
+                        elif is_city_name(tag):
+                            node["address"] = {}
+                            node["address"]["city"] = clean_city_name(tag.attrib['v'])
                         else:
                             node["address"] = {}
                             node["address"][tag.attrib['k'].split(":")[1]] =  tag.attrib['v']

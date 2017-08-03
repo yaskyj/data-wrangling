@@ -144,4 +144,4 @@ def process_map(file_in, pretty = False):
     return data
 
 if __name__ == "__main__":
-    data = process_map('sample.osm')
+    data = process_map('boulder.osm')

@@ -11,8 +11,24 @@ Map Area: Boulder CO, United States
 2. [Data Overview](#section2)
 3. [Additional Ideas](#section2)
 
-## <a id='section1'>Problems Encountered in the Map</a>
+##  <a id='section1'>1. Problems Encountered in the Map</a>
 
-## <a id='section2'>Data Overview</a>
+## <a id='section2'>2. Data Overview</a>
 
-## <a id='section3'>Additional Ideas</a>
+
+```python
+import os
+print "The boulder.osm file is %.1fMB" % (float(os.path.getsize('boulder.osm'))/1000000)
+print "The boulderimport.json file is %.1fMB" % (float(os.path.getsize('boulderimport.json'))/1000000)
+```
+
+    The boulder.osm file is 91.5MB
+    The boulderimport.json file is 101.6MB
+
+
+## <a id='section3'>3. Additional Ideas</a>
+
+
+```python
+
+```

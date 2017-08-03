@@ -1,13 +1,13 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-# Cleaning street names
+# Exploring other tags
 import xml.etree.cElementTree as ET
 from collections import defaultdict
 import re
 import pprint
 
-osm_file = open("sample.osm", "r")
+osm_file = open("boulder.osm", "r")
 
 tag_counts = defaultdict(int)
 tag_values = defaultdict(set)
@@ -34,10 +34,9 @@ def print_top_tags(d):
     values = sorted(d.items(), key=lambda x:x[1], reverse=True)
     for k,v in values:
         if count < 10:
-            # print tag_values[k]
-            count += 1
-            top_tags[k] = tag_values[k]
-            # print "%s: %d" % (k, v)
+            if k != "addr:street" and k != "name":
+                top_tags[k] = tag_values[k]
+                count += 1
         else:
             break
     pprint.pprint(dict(top_tags))

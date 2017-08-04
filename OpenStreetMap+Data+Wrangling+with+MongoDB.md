@@ -13,6 +13,8 @@ Map Area: Boulder CO, United States
 [Postal Code Problems](#section1_3)  
 ### [2. Data Overview](#section2)
 ### [3. Additional Ideas](#section3)
+[Basic Field Validations on Data Entry](#section3_1)  
+[Conclusion](#section3_2)  
 
 ##  <a id='section1'>1. Problems Encountered in the Map</a>
 
@@ -144,7 +146,8 @@ for i in list(amenity):
 
 ## <a id='section3'>3. Additional Ideas</a>
 
+### <a id='section3_1'>Basic Field Validation on Data Entry</a>  
+Most programs have basic field validations to improve the quality of data being input into the system. Some of the problems in the data could be fixed during entry just by having formatting masks (e.g only allowing five integers in zip codes) and performing check routines (e.g. are those gps coordinates in or near the zip code being tagged).
 
-```python
-
-```
+### <a id='section3_2'>Conclusion</a>  
+While a remarkable amount of data gets entered into OpenStreetMap, programmatic and manual cleaning after the data has been entered should be secondary to robust data validation upon entry. The data reviewed was fairly clean, but there appears to be a number of small anomalies (e.g. 'CO' being entered as a postcode, Unicode characters being added to fields). While looking at a small set of data these problems are easily identified, as the dataset reviewed grows manual corrections and small cleaning routines are not able to keep up with the lack of consistency. 

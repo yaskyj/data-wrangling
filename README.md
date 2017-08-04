@@ -1,4 +1,4 @@
-#OpenStreetMap Wrangling with MongoDB Project
+# OpenStreetMap Wrangling with MongoDB Project
 
 [OpenStreetMap+Data+Wrangling+with+MongoDB.md](https://github.com/yaskyj/data-wrangling/blob/master/OpenStreetMap%2BData%2BWrangling%2Bwith%2BMongoDB.md)  
 The project's Jupyter Notebook downloaded as Markdown. The Markdown preserves the inner document links for navigation.  

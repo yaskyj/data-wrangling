@@ -132,6 +132,10 @@ def shape_element(element):
             if problemchars.match(tag.attrib['k']):
                 pass
 
+            #Check for the general type tag and ignore
+            elif tag.attrib['k'] == "type":
+                pass
+
             #Check if the tag more than one colon and if so, ignores tag
             elif tag.attrib['k'].count(":") > 1:
                 pass

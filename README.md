@@ -4,7 +4,7 @@
 The project's Jupyter Notebook downloaded as Markdown. The Markdown preserves the inner document links for navigation.  
 
 [OpenStreetMap Data Wrangling with MongoDB.ipynb](https://github.com/yaskyj/data-wrangling/blob/master/OpenStreetMap%20Data%20Wrangling%20with%20MongoDB.ipynb)  
-The project's Juptyer Notebook file containing all explanations of data cleansing, queries, and conclusions. Queries where executed with pymongo within the notebook itself.  
+The project's Juptyer Notebook file containing all explanations of data cleansing, queries, and conclusions. Queries were executed with pymongo within the notebook itself.  
 
 [audit_street_names.py](https://github.com/yaskyj/data-wrangling/blob/master/audit_street_names.py)  
 Python script to look up street names in order to see which abbreviations needed to be converted.  
